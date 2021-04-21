@@ -1,5 +1,7 @@
 import 'dart:core';
+import 'dart:html';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 
 import 'package:flutter/material.dart';
 import 'package:heavens_ticket/splash_screen.dart';
@@ -52,8 +54,19 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  var totalCost = 0;
+
+  // void changeVariableOnUI() {
+  //   setState(() => totalCost = 22);
+  // }
 
   Widget _dialogBuilder(BuildContext context, Ticket ticket) {
     ThemeData localTheme = Theme.of(context);
@@ -88,6 +101,27 @@ class HomePage extends StatelessWidget {
               ticket.description,
               style: localTheme.textTheme.bodyText1,
             ),
+            SizedBox(
+              height: 18.0,
+            ),
+            TextField(
+              autofocus: true,
+              textCapitalization: TextCapitalization.words,
+              decoration: InputDecoration(
+                hintText: 'Enter The No of People',
+              ),
+              onChanged: (text) {
+                // changeVariableOnUI();
+                totalCost = (int.parse(text) + ticket.price) as int;
+                setState(
+                    () => totalCost = (int.parse(text) + ticket.price) as int);
+                print(totalCost);
+              },
+            ),
+            SizedBox(
+              height: 18.0,
+            ),
+            Text('Your Total Cost is: $totalCost'),
             SizedBox(
               height: 18.0,
             ),
