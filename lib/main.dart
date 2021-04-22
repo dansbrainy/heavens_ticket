@@ -123,6 +123,8 @@ class _HomePageState extends State<HomePage> {
               calculate(),
               style: TextStyle(
                 color: Colors.green,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
               ),
             ),
             SizedBox(
@@ -183,16 +185,14 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           Padding(
               padding: const EdgeInsets.all(18.0),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
+              child: Center(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
                     SizedBox(
                       height: 30.0,
                     ),
-                    Text(
-                        // ticket.name,
-                        // style: localTheme.textTheme.headline4,
-                        "Enter The Number of People"),
+                    Text("Enter The Number of People"),
                     SizedBox(
                       height: 18.0,
                     ),
@@ -218,7 +218,7 @@ class _HomePageState extends State<HomePage> {
                     SizedBox(
                       height: 8.0,
                     ),
-                  ])),
+                  ]))),
           ListView.builder(
             itemCount: _tickets.length,
             itemExtent: 80.0,
