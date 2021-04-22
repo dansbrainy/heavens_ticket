@@ -1,5 +1,4 @@
 import 'dart:core';
-import 'dart:html';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 
@@ -63,7 +62,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Ticket ticket;
-  var totalCost = 0;
+
+  double totalCost = 0;
+  final myController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    myController.dispose();
+    super.dispose();
+  }
 
   // void changeVariableOnUI() {
   //   setState(() => totalCost = 22);
@@ -71,6 +79,12 @@ class _HomePageState extends State<HomePage> {
 
   Widget _dialogBuilder(BuildContext context, Ticket ticket) {
     ThemeData localTheme = Theme.of(context);
+
+    calculate() {
+      totalCost = double.parse(myController.text) * ticket.price;
+      return 'Your Total Cost is: R $totalCost';
+      // return myController.text;
+    }
 
     return SimpleDialog(contentPadding: EdgeInsets.zero, children: [
       Image.network(
@@ -105,24 +119,7 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               height: 18.0,
             ),
-            // TextField(
-            //   autofocus: true,
-            //   textCapitalization: TextCapitalization.words,
-            //   decoration: InputDecoration(
-            //     hintText: 'Enter The No of People',
-            //   ),
-            //   onChanged: (text) {
-            //     // changeVariableOnUI();
-            //     totalCost = (int.parse(text) + ticket.price) as int;
-            //     setState(
-            //         () => totalCost = (int.parse(text) + ticket.price) as int);
-            //     print(totalCost);
-            //   },
-            // ),
-            // SizedBox(
-            //   height: 18.0,
-            // ),
-            Text('Your Total Cost is: $totalCost'),
+            Text(calculate()),
             SizedBox(
               height: 18.0,
             ),
@@ -195,6 +192,7 @@ class _HomePageState extends State<HomePage> {
                       height: 18.0,
                     ),
                     TextField(
+                      controller: myController,
                       autofocus: true,
                       textCapitalization: TextCapitalization.words,
                       decoration: InputDecoration(
@@ -202,9 +200,9 @@ class _HomePageState extends State<HomePage> {
                       ),
                       onChanged: (text) {
                         // changeVariableOnUI();
-                        totalCost = (int.parse(text) + ticket.price) as int;
-                        setState(() => totalCost =
-                            (int.parse(text) + ticket.price) as int);
+                        totalCost = double.parse(text) + ticket.price;
+                        setState(() =>
+                            totalCost = double.parse(text) + ticket.price);
                         print(totalCost);
                       },
                     ),
