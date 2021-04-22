@@ -1,5 +1,4 @@
 import 'dart:core';
-import 'dart:html';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 
@@ -62,7 +61,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var totalCost = 0;
+  Ticket ticket;
+
+  double totalCost = 0;
+  final myController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    myController.dispose();
+    super.dispose();
+  }
 
   // void changeVariableOnUI() {
   //   setState(() => totalCost = 22);
@@ -70,6 +79,12 @@ class _HomePageState extends State<HomePage> {
 
   Widget _dialogBuilder(BuildContext context, Ticket ticket) {
     ThemeData localTheme = Theme.of(context);
+
+    calculate() {
+      totalCost = double.parse(myController.text) * ticket.price;
+      return 'Your Total Cost is: R $totalCost';
+      // return myController.text;
+    }
 
     return SimpleDialog(contentPadding: EdgeInsets.zero, children: [
       Image.network(
@@ -104,24 +119,7 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               height: 18.0,
             ),
-            TextField(
-              autofocus: true,
-              textCapitalization: TextCapitalization.words,
-              decoration: InputDecoration(
-                hintText: 'Enter The No of People',
-              ),
-              onChanged: (text) {
-                // changeVariableOnUI();
-                totalCost = (int.parse(text) + ticket.price) as int;
-                setState(
-                    () => totalCost = (int.parse(text) + ticket.price) as int);
-                print(totalCost);
-              },
-            ),
-            SizedBox(
-              height: 18.0,
-            ),
-            Text('Your Total Cost is: $totalCost'),
+            Text(calculate()),
             SizedBox(
               height: 18.0,
             ),
@@ -166,20 +164,65 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    // throw UnimplementedError();
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.amber,
-          title: Text("Heaven's Ticket"),
-          foregroundColor: Colors.black,
-          centerTitle: true,
-          automaticallyImplyLeading: true,
-        ),
-        body: ListView.builder(
-          itemCount: _tickets.length,
-          itemExtent: 80.0,
-          itemBuilder: _listItemBuilder,
-        ));
+      appBar: AppBar(
+        backgroundColor: Colors.amber,
+        title: Text("Heaven's Ticket"),
+        foregroundColor: Colors.black,
+        centerTitle: true,
+        automaticallyImplyLeading: true,
+      ),
+      body: Column(
+        // color: Color(0xff258DED),
+        // alignment: Alignment.center,
+        children: <Widget>[
+          Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                    Text(
+                        // ticket.name,
+                        // style: localTheme.textTheme.headline4,
+                        "Enter The Number of People"),
+                    SizedBox(
+                      height: 18.0,
+                    ),
+                    TextField(
+                      controller: myController,
+                      autofocus: true,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: InputDecoration(
+                        hintText: 'No of People',
+                      ),
+                      onChanged: (text) {
+                        // changeVariableOnUI();
+                        totalCost = double.parse(text) + ticket.price;
+                        setState(() =>
+                            totalCost = double.parse(text) + ticket.price);
+                        print(totalCost);
+                      },
+                    ),
+                    SizedBox(
+                      height: 48.0,
+                    ),
+                    Text('Select a Ticket'),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                  ])),
+          ListView.builder(
+            itemCount: _tickets.length,
+            itemExtent: 80.0,
+            itemBuilder: _listItemBuilder,
+            shrinkWrap: true,
+          )
+          //all the children widgets that you need
+        ],
+      ),
+    );
   }
 }
