@@ -62,6 +62,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Ticket ticket;
   var totalCost = 0;
 
   // void changeVariableOnUI() {
@@ -104,23 +105,23 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               height: 18.0,
             ),
-            TextField(
-              autofocus: true,
-              textCapitalization: TextCapitalization.words,
-              decoration: InputDecoration(
-                hintText: 'Enter The No of People',
-              ),
-              onChanged: (text) {
-                // changeVariableOnUI();
-                totalCost = (int.parse(text) + ticket.price) as int;
-                setState(
-                    () => totalCost = (int.parse(text) + ticket.price) as int);
-                print(totalCost);
-              },
-            ),
-            SizedBox(
-              height: 18.0,
-            ),
+            // TextField(
+            //   autofocus: true,
+            //   textCapitalization: TextCapitalization.words,
+            //   decoration: InputDecoration(
+            //     hintText: 'Enter The No of People',
+            //   ),
+            //   onChanged: (text) {
+            //     // changeVariableOnUI();
+            //     totalCost = (int.parse(text) + ticket.price) as int;
+            //     setState(
+            //         () => totalCost = (int.parse(text) + ticket.price) as int);
+            //     print(totalCost);
+            //   },
+            // ),
+            // SizedBox(
+            //   height: 18.0,
+            // ),
             Text('Your Total Cost is: $totalCost'),
             SizedBox(
               height: 18.0,
@@ -166,20 +167,64 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    // throw UnimplementedError();
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.amber,
-          title: Text("Heaven's Ticket"),
-          foregroundColor: Colors.black,
-          centerTitle: true,
-          automaticallyImplyLeading: true,
-        ),
-        body: ListView.builder(
-          itemCount: _tickets.length,
-          itemExtent: 80.0,
-          itemBuilder: _listItemBuilder,
-        ));
+      appBar: AppBar(
+        backgroundColor: Colors.amber,
+        title: Text("Heaven's Ticket"),
+        foregroundColor: Colors.black,
+        centerTitle: true,
+        automaticallyImplyLeading: true,
+      ),
+      body: Column(
+        // color: Color(0xff258DED),
+        // alignment: Alignment.center,
+        children: <Widget>[
+          Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                    Text(
+                        // ticket.name,
+                        // style: localTheme.textTheme.headline4,
+                        "Enter The Number of People"),
+                    SizedBox(
+                      height: 18.0,
+                    ),
+                    TextField(
+                      autofocus: true,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: InputDecoration(
+                        hintText: 'No of People',
+                      ),
+                      onChanged: (text) {
+                        // changeVariableOnUI();
+                        totalCost = (int.parse(text) + ticket.price) as int;
+                        setState(() => totalCost =
+                            (int.parse(text) + ticket.price) as int);
+                        print(totalCost);
+                      },
+                    ),
+                    SizedBox(
+                      height: 48.0,
+                    ),
+                    Text('Select a Ticket'),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                  ])),
+          ListView.builder(
+            itemCount: _tickets.length,
+            itemExtent: 80.0,
+            itemBuilder: _listItemBuilder,
+            shrinkWrap: true,
+          )
+          //all the children widgets that you need
+        ],
+      ),
+    );
   }
 }
