@@ -24,7 +24,7 @@ final List<Ticket> _tickets = <Ticket>[
       description: 'Ride for 140 days on Mars',
       price: 28000,
       imageUrl:
-          'https://photojournal.jpl.nasa.gov/jpegMod/PIA24266_modest.jpg'),
+          'https://c.files.bbci.co.uk/9353/production/_117351773_mars_perseverance_nrf_0009_0667756352_693ecm_n0030000ncam05000_01_295j.jpg'),
   Ticket(
       name: 'Venus Ride',
       description: 'Ride for 180 days on Venus',
@@ -119,7 +119,12 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               height: 18.0,
             ),
-            Text(calculate()),
+            Text(
+              calculate(),
+              style: TextStyle(
+                color: Colors.green,
+              ),
+            ),
             SizedBox(
               height: 18.0,
             ),
